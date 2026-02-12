@@ -3,11 +3,11 @@ Video and audio recording toolset for vloggers🎙️📹🎬
 
 Designed to record vlogs with classical jump cuts
 using camera of Android-based device and microphone of GNU/Linux machine.
-I [use it](https://alopatindev.github.io/2019/02/05/video-recording-with-automatic-jump-cuts-using-open-source-and-coding/) with Pitivi for my [YouTube channel](https://www.youtube.com/@codonaft).
+I [use it](https://alopatindev.github.io/2019/02/05/video-recording-with-automatic-jump-cuts-using-open-source-and-coding/) with Kdenlive for my [YouTube channel](https://www.youtube.com/@codonaft).
 
 Currently can keep functioning well even if you experience temporary [USB phone connection failure](https://android.stackexchange.com/questions/193637/how-can-i-adb-pull-a-large-file-when-the-usb-connection-breaks-continuously).
 
-Two possible pipelines:
+Two possible workflows:
 - record with `vlog-record`, apply `vlog-render`
 - record normally, without any additional software, apply `vlog-add` and `vlog-render`
 
@@ -36,6 +36,44 @@ Two possible pipelines:
     - USB Debugging should be [enabled](https://github.com/alopatindev/qdevicemonitor/blob/master/TROUBLESHOOTING.md#android-devices-are-not-recognized)
 
 2. `git clone git@github.com:alopatindev/vlog-toolset.git && cd vlog-toolset && ./configure`
+
+3. Recommended configuration
+```ini
+# ~/.config/mpv/mpv.conf
+
+af=scaletempo2
+volume=90
+volume-max=300
+```
+
+```ini
+# ~/.config/mpv/input.conf
+
+RIGHT seek 1 exact
+LEFT seek -1 exact
+
+n playlist-next                        # skip to next file
+ENTER playlist-next                    # skip to next file
+b playlist-prev                        # skip to previous file
+
+х multiply speed 1/1.1                 # scale playback speed
+ъ multiply speed 1.1
+ALT+z multiply speed 1/1.1
+ALT+x multiply speed 1.1
+ALT+c set speed 1.0
+
+Ю playlist-next                        # skip to next file
+Б playlist-prev                        # skip to previous file
+
+CTRL+SHIFT+< add chapter -1 ; script-message osc-chapterlist 6
+CTRL+SHIFT+> add chapter 1 ; script-message osc-chapterlist 6
+CTRL+SHIFT+Б add chapter -1 ; script-message osc-chapterlist 6
+CTRL+SHIFT+Ю add chapter 1 ; script-message osc-chapterlist 6
+CTRL+SHIFT+/ script-message osc-chapterlist 6
+CTRL+SHIFT+p script-message osc-chapterlist 6
+
+ESC cycle pause
+```
 
 ### Android device
 - Open Camera (from [F-Droid](https://f-droid.org/en/packages/net.sourceforge.opencamera/) or [Google Play](https://play.google.com/store/apps/details?id=net.sourceforge.opencamera)) (tested with 1.51.1)
